@@ -358,6 +358,8 @@
       //var ans = horoscopeData["aquarius"];
 
       var ans = horoscopeData[main];
+
+      var ez = "https://gist.githubusercontent.com/dinowang/5290d4cebf96a666c29ab0878afeb2f1/raw/d8c778aad172fdf9175e1a1109409ba49d2647b8/" + main + ".json";
       console.info(ans);
       console.info(year);
       console.info(month);
@@ -396,26 +398,68 @@
         var dex = parseInt(d);
         var z = ans["lookup"][d - 1];
 
-        var target = document.getElementById("guessResults");
-        var newNode = document.createElement("span");  
-        newNode.classList = "list-group-item";
-        newNode.innerHTML = "<span class='label label-primary'>" + year + "-" + month + "-" + date + "</span>"+"  " + "出生的你 , 星座是" + name + "<br>" + "你的生命靈數" + "<br>" + dex + "." + z;
-        target.appendChild(newNode);
-        target.insertBefore(newNode, target.childNodes[0]);
+
+        $.ajax({
+          type: "get",
+          url: ez,
+          //data: "data",
+          dataType: "json",
+          success: function (response) {
+            var target = document.getElementById("guessResults");
+            var newNode = document.createElement("span");
+            newNode.classList = "list-group-item";
+            newNode.innerHTML = "<span class='label label-primary'>" + year + "-" + month + "-" + date + "</span>" + "  " + "出生的你 , 星座是" + response.name + "<br>" + "你的生命靈數" + "<br>" + dex + "." + response.lookup[dex - 1];
+            target.appendChild(newNode);
+            target.insertBefore(newNode, target.childNodes[0]);
+          }
+        });
+
+        // $.get(ez, null,
+        //   function (data, textStatus, jqXHR) {
+        //     var target = document.getElementById("guessResults");
+        //     var newNode = document.createElement("span");
+        //     newNode.classList = "list-group-item";
+        //     newNode.innerHTML = "<span class='label label-primary'>" + year + "-" + month + "-" + date + "</span>" + "  " + "出生的你 , 星座是" + data.name + "<br>" + "你的生命靈數" + "<br>" + dex + "." + data.lookup[dex - 1];
+        //     target.appendChild(newNode);
+        //     target.insertBefore(newNode, target.childNodes[0]);
+        //   },
+        //   "json"
+        // );
+
 
 
       } else if (c < 10) {
 
-        var z = ans["lookup"][c - 1];
-        var target = document.getElementById("guessResults");
-        var newNode = document.createElement("span");  
-        newNode.classList = "list-group-item";
-        newNode.innerHTML = "<span class='label label-primary'>"+ year + "-" + month + "-" + date + "</span>" +"  " + "出生的你 , 星座是" + name + "<br>" + "你的生命靈數" + "<br>" + cex + "." + z;
-        target.appendChild(newNode);
-        target.insertBefore(newNode, target.childNodes[0]);
+        $.ajax({
+          type: "get",
+          url: ez,
+          //data: "data",
+          dataType: "json",
+          success: function (response) {
+            var target = document.getElementById("guessResults");
+            var newNode = document.createElement("span");
+            newNode.classList = "list-group-item";
+            newNode.innerHTML = "<span class='label label-primary'>" + year + "-" + month + "-" + date + "</span>" + "  " + "出生的你 , 星座是" + response.name + "<br>" + "你的生命靈數" + "<br>" + cex + "." + response.lookup[cex - 1];
+            target.appendChild(newNode);
+            target.insertBefore(newNode, target.childNodes[0]);
+          }
+        });
+        // $.get(ez, null,
+        //   function (data, textStatus, jqXHR) {
+        //     var z = ans["lookup"][c - 1];
+        //     var target = document.getElementById("guessResults");
+        //     var newNode = document.createElement("span");
+        //     newNode.classList = "list-group-item";
+        //     newNode.innerHTML = "<span class='label label-primary'>" + year + "-" + month + "-" + date + "</span>" + "  " + "出生的你 , 星座是" + data.name + "<br>" + "你的生命靈數" + "<br>" + cex + "." + data.lookup[cex - 1];
+        //     target.appendChild(newNode);
+        //     target.insertBefore(newNode, target.childNodes[0]);
+        //   },
+        //   "json"
+        // );
+
       }
 
-      console.info(z);
+
 
 
 
